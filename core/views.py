@@ -12,3 +12,14 @@ class SensorDataView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        data = SensorData.objects.all()
+        serializer = SensorDataSerializer(data, many=True)
+        return Response(
+            {
+                'data': serializer.data, 
+                'msg': 'Hydromet data fetched successfully'
+            }, 
+            status=status.HTTP_200_OK
+            )
